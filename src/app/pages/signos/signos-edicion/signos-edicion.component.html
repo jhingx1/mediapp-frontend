@@ -1,0 +1,70 @@
+<form class="example-container" [formGroup]="form" (ngSubmit)="operar()" #espForm="ngForm">
+
+    <div [hidden]="true" >
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="ID" required formControlName="id">
+        </mat-form-field>
+    </div>
+
+    <div *ngIf="edicion==true">
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="paciente" 
+            laceholder="paciente" required formControlName="paciente">
+        </mat-form-field>
+    </div>
+
+    <div *ngIf="edicion==false">
+        <mat-form-field>
+            <mat-select placeholder="Selecciona paciente" [(value)]="idPacienteSeleccionado">
+                <mat-option *ngFor="let p of pacientes" [value]="p.idPaciente">            
+                    {{p.nombres}} {{p.apellidos}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div [hidden]="true">
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="IDPACIENTE" formControlName="idpaciente">
+        </mat-form-field>
+    </div>
+
+
+    <!-- <mat-form-field class="example-full-width">
+        <input matInput placeholder="fecha"
+        laceholder="fecha" required formControlName="fecha">
+    </mat-form-field> -->
+
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Escoger una fecha dd/mm/yyyy"
+            [(ngModel)]="fechaSeleccionada" [max]="maxFecha" [ngModelOptions]="{standalone: true}">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="temperatura"
+        laceholder="temperatura" required formControlName="temperatura">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="pulso"
+        laceholder="pulso" required formControlName="pulso">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="ritmo"
+        laceholder="ritmo" required formControlName="ritmo">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="espForm.invalid">
+        <mat-icon>done</mat-icon>
+        <span>Aceptar</span>
+    </button>
+    <button mat-raised-button color="accent" routerLink='/pages/signos' type="button">
+        <mat-icon>close</mat-icon>
+        <span>Cancelar</span>
+    </button>
+
+</form>  
