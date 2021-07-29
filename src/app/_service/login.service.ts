@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -30,17 +31,28 @@ export class LoginService {
   }
 
   cerrarSesion() {
+      
+    const helper = new JwtHelperService();
     let token = sessionStorage.getItem(environment.TOKEN_NAME);
+    // console.log("verifica token");
+    // console.log(helper.isTokenExpired(token));
+    
+    // console.log("Token");
+    // console.log(token);      
 
-    if (token) {
+    if (!helper.isTokenExpired(token)) {
+      console.log("Cerrar Session");
       this.http.get(`${environment.HOST}/tokens/anular/${token}`).subscribe(() => {
         sessionStorage.clear();
         this.router.navigate(['login']);
       });
-    } else {
+    }else {
+      console.log("Token expirado");
       sessionStorage.clear();
       this.router.navigate(['login']);
     }
+    
+    console.log("Fin cerrarSesion");
   }
 
   enviarCorreo(correo: string) {

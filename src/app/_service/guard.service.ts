@@ -28,6 +28,9 @@ export class GuardService implements CanActivate{
       //2) VERIFICAR SI EL TOKEN NO HA EXPIRADO
       const helper = new JwtHelperService();
       let token = sessionStorage.getItem(environment.TOKEN_NAME);
+      // console.log("verifica token");
+      // console.log(helper.isTokenExpired(token));
+
       if (!helper.isTokenExpired(token)) {
         //3) VERIFICAR SI TIENES EL ROL NECESARIO PARA ACCEDER A ESA PAGINA 
         //url -> /pages/consulta
@@ -60,6 +63,7 @@ export class GuardService implements CanActivate{
 
       } else {
         this.loginService.cerrarSesion();
+        //console.log("Cerrando");
         return false;
       }
 

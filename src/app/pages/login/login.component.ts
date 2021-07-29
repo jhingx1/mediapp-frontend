@@ -26,7 +26,10 @@ export class LoginComponent implements OnInit {
 
   iniciarSesion(){
     this.loginService.login(this.usuario, this.clave).subscribe(data => {
-      //console.log(data);
+      console.log("Data-Token");
+      console.log(data);
+      console.log("Tiempo Expiracion");
+      console.log(data.expires_in);
       sessionStorage.setItem(environment.TOKEN_NAME, data.access_token);
 
       this.router.navigate(['pages/inicio']);
